@@ -1,0 +1,11 @@
+{
+  "name": "Rest Web Scraper",
+  "description": "Scrape data on current url ",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "pop/pop.html"
+  },
+
+  "permissions": ["activeTab", "tabs", "background", "scripting", "http://*/"]
+}
