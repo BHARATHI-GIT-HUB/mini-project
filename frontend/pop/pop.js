@@ -1,6 +1,7 @@
 document.getElementById("getUrl").onclick = getCurrUrl;
 document.getElementById("fetchData").onclick = fetchData;
 
+const url = "";
 function getCurrUrl() {
   chrome.tabs.query(
     {
@@ -18,26 +19,35 @@ function getCurrUrl() {
           const parser = new DOMParser();
           const htmlDoc = parser.parseFromString(xhr.responseText, "text/html");
           const title = htmlDoc.querySelector("title").textContent;
-          document.getElementById("title").innerHTML = title;
+          const name = title.split(",");
+
+          document.getElementById("title").innerHTML = name[0];
+          document.getElementById("load").id = "noload";
+          document.getElementById("getProduct").id = "none";
         } else {
-          document.getElementById("title").innerHTML = "This Web Is Resticted";
+          document.getElementById("none").id = "load";
         }
       };
       xhr.send();
 
       document.getElementById("url").innerHTML = tab.url;
-      console.log(tab.url);
     }
   );
 }
 
 async function fetchData() {
+  const record = null;
+  if (record == null) {
+    document.getElementById("noload").id = "load";
+  }
   const url = document.getElementById("url").innerHTML;
 
   const res = await fetch("http://localhost:8000/add/?url=" + url);
 
-  const record = await res.json();
-  console.log(record.one_line);
+  record = await res.json();
+  if (record != null) {
+    document.getElementById("load").id = "noload";
+  }
 
   document.getElementById("fetchMessage").innerHTML = record.one_line;
 }

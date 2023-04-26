@@ -1,23 +1,26 @@
+import nltk
 import openai
 import requests
 from bs4 import BeautifulSoup
-from gensim.summarization import summarize
-from nltk.tokenize import sent_tokenize
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-openai.api_key = "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"
+nltk.download('punkt')
+nltk.download('stopwords')
+
+openai.api_key = "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"
 
 
 @api_view(['GET'])
 def get_data(request):
     url = request.GET.get('url')
     reviews = scraper(url)
+    print(reviews)
 
-    summary = summarize_array(reviews)
-    print(summary)
-    # one_line = summarize_reviews(reviews)
-    return Response({'one_line': summary})
+    # summary = summarize_array(reviews)
+    # print(summary)
+    one_line = summarize_reviews(reviews)
+    return Response({'one_line': one_line})
 
 
 def get_html(url):
@@ -47,22 +50,22 @@ def scraper(product_url):
     return reviews
 
 
-def summarize_reviews(reviews):
-    text = ' '.join(reviews)
+# def summarize_reviews(reviews):
+#     text = ' '.join(reviews)
+#
+#     sentences = sent_tokenize(text)
+#
+#     summary = ""
+#     count = 0.01
+#
+#     while len(summary) <= 0:
+#         summary = summarize(text, ratio=0.01)
+#         count += 0.01
+#
+#     return summary
 
-    sentences = sent_tokenize(text)
 
-    summary = ""
-    count = 0.01
-
-    while len(summary) <= 0:
-        summary = summarize(text, ratio=0.01)
-        count += 0.01
-
-    return summary
-
-
-def summarize_array(array):
+def summarize_reviews(array):
     prompt = "Please summarize the following texts:\n"
     for text in array:
         prompt += f"- {text}\n"
@@ -77,3 +80,17 @@ def summarize_array(array):
     )
     summary = response.choices[0].text.strip()
     return summary
+
+# def summarize_reviews(array):
+#     stop_words = set(stopwords.words('english'))
+#     sentences = []
+#     for text in array:
+#         sentences.extend(sent_tokenize(text))
+#     words = word_tokenize(' '.join(sentences).lower())
+#     words_filtered = [word for word in words if word not in stop_words and len(word) > 1]
+#     frequency_distribution = FreqDist(words_filtered)
+#     summary_sentences = sorted(sentences, key=lambda sentence: sum(
+#         frequency_distribution[word.lower()] for word in word_tokenize(sentence) if word.lower() not in stop_words),
+#                                reverse=True)[:3]
+#     summary = ' '.join(summary_sentences)
+#     return summary

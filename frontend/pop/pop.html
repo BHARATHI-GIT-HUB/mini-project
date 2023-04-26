@@ -12,23 +12,41 @@
     <title>Document</title>
   </head>
   <body class="container flex flex-col items-center justify-center gap-10">
-    <div class="flex flex-col justify-center items-center gap-5">
-      <h3 id="url" class="px-10 font-normal text-xl text-center hidden"></h3>
-      <h3 id="title" class="px-10 font-normal text-xl text-center"></h3>
-      <button id="getUrl" class="px-4 py-1 bg-teal-600 text-white rounded-xl">
-        Get Url
+    <div
+      class="flex flex-col justify-center items-center gap-5"
+      id="getProduct"
+    >
+      <button id="getUrl" class="px-4 py-1 text-white rounded-lg">
+        whats the product
       </button>
     </div>
 
+    <div id="none" class="loader">
+      <div>G</div>
+      <div>N</div>
+      <div>I</div>
+      <div>D</div>
+      <div>A</div>
+      <div>O</div>
+      <div>L</div>
+    </div>
+
+    <!-- <div id="start">new</div>
+    <button id="click" class="px-4 py-1 bg-teal-600 text-white rounded-xl">
+      Fetch
+    </button> -->
+    <h3 id="url" class="px-10 font-normal text-xl text-center hidden"></h3>
+    <h3
+      id="title"
+      class="px-10 font-normal text-xl text-center text-[#F95E56]"
+    ></h3>
+
     <div class="flex flex-col justify-center items-center gap-2">
-      <button
-        id="fetchData"
-        class="px-4 py-1 bg-teal-600 text-white rounded-xl"
-      >
-        Fetch Data
+      <button id="fetchData" class="px-4 py-1 text-white rounded-lg">
+        show recommendation
       </button>
-      <ul class="flex flex-col items-start justify-start gap-0">
-        <li id="fetchMessage"></li>
+      <ul class="flex flex-col items-start justify-start gap-0 px-6 mt-5">
+        <li id="fetchMessage" class="text-red-500"></li>
       </ul>
     </div>
     <script src="pop.js"></script>
